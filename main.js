@@ -2,10 +2,14 @@ let timer;
 let deleteFirstPhotoDelay;
 
 async function start() {
-  const response = await fetch("https://dog.ceo/api/breeds/list/all");
-  const data = await response.json();
+  try {
+    const response = await fetch("https://dog.ceo/api/breeds/list/all");
+    const data = await response.json();
 
-  createBreedList(data.message);
+    createBreedList(data.message);
+  } catch (e) {
+    console.log("There was a problem fetching the breed list.");
+  }
 }
 
 start();
@@ -26,9 +30,13 @@ function createBreedList(breedList) {
 
 async function loadByBreed(breed) {
   if (breed != "Choose a dog breed") {
-    const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
-    const data = await response.json();
-    createSlideShow(data.message);
+    try {
+      const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+      const data = await response.json();
+      createSlideShow(data.message);
+    } catch (e) {
+      console.log("There was a problem fetching the breed list.");
+    }
   }
 }
 
